@@ -10,7 +10,13 @@ interface LoginProps {
 }
 
 interface LoginResponse {
-  data : {
+  data: {
+    token : string;
+    user : {
+      email: string;
+      server: string;
+      accountType: string;
+    }
   }
 }
 const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
@@ -22,6 +28,12 @@ const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
   const handlelogin = async () : Promise<void> => {
     try{
       setLoading(true);
+      const response = await axios.post<LoginResponse>("acttrader/login", {
+         username,
+         password,
+         accountType,
+    });
+    const token = response.data.data.token;
 
     }
     catch{
