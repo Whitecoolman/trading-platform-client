@@ -2,16 +2,24 @@ import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { Loader } from "lucide-react";
 import { CiLogin } from "react-icons/ci";
-import axios from ""
+import axios from "../../utils/ActTraderApi";
 
-export default function ActTraderLogin() {
+interface LoginProps {
+  onAuthSuccess : () => void;
+}
+
+interface LoginResponse {
+  data : {
+    
+  }
+}
+const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [accountType, setAccountType] = useState<string>("DEMO");
   const [loading, setLoading] = useState<boolean>(false);
-  const handleLogin = () => {
-    setLoading(false);
-  };
+  
   return (
     <div>
       <div className="bg-[#070707] p-6 rounded shadow-md w-96 border border-[#333333] border-dashed">
@@ -80,7 +88,7 @@ export default function ActTraderLogin() {
           <div className="mb-4 w-[80%]">
             <button
               className=" w-full bg-blue-500 outline-1 outline-dashed rounded-lg outline-blue-500 outline-offset-2 p-1 flex justify-center items-center gap-2"
-              onClick={handleLogin}
+              onClick={ onAuthSuccess }
             >
               {loading && <Loader className="h-5 w-5 mr-2 animate-spin" />}
               {!loading && <CiLogin className="w-5 h-5" />}
@@ -92,3 +100,5 @@ export default function ActTraderLogin() {
     </div>
   );
 }
+
+export default ActTraderLogin
