@@ -34,13 +34,18 @@ const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
          accountType,
     });
     const token = response.data.data.token;
-
+    console.log("--------------->actTradertoken", token);
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(response.data.data.user));
+    if (token.length > 0){
+      onAuthSuccess();
     }
-    catch{
-
+    }
+    catch (error){
+      toast.warn("Login info is wrong");
     }
     finally{
-
+      setLoading(false);
     }
   }
   return (
