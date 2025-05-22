@@ -3,6 +3,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { Loader } from "lucide-react";
 import { CiLogin } from "react-icons/ci";
 import axios from "../../utils/ActTraderApi";
+import {toast} from "react-toastify";
 
 interface LoginProps {
   onAuthSuccess : () => void;
@@ -10,7 +11,6 @@ interface LoginProps {
 
 interface LoginResponse {
   data : {
-    
   }
 }
 const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
@@ -19,7 +19,18 @@ const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
   const [password, setPassword] = useState<string>("");
   const [accountType, setAccountType] = useState<string>("DEMO");
   const [loading, setLoading] = useState<boolean>(false);
-  
+  const handlelogin = async () : Promise<void> => {
+    try{
+      setLoading(true);
+
+    }
+    catch{
+
+    }
+    finally{
+
+    }
+  }
   return (
     <div>
       <div className="bg-[#070707] p-6 rounded shadow-md w-96 border border-[#333333] border-dashed">
