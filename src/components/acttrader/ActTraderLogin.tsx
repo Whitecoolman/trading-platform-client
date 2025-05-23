@@ -116,7 +116,7 @@ const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
           <div className="mb-4 w-[80%]">
             <button
               className=" w-full bg-blue-500 outline-1 outline-dashed rounded-lg outline-blue-500 outline-offset-2 p-1 flex justify-center items-center gap-2"
-              onClick={ onAuthSuccess }
+              onClick={ handlelogin }
             >
               {loading && <Loader className="h-5 w-5 mr-2 animate-spin" />}
               {!loading && <CiLogin className="w-5 h-5" />}
