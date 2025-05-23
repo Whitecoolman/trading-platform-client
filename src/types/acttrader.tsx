@@ -11,3 +11,11 @@ export interface ActTraderStateProps {
     error : object | string | null;
 }
 
+export interface UserParams{
+    username : string;
+    accountType: string;
+}
+
+export interface ActtraderAccountListProps {
+    onLogout : () => void;
+}
