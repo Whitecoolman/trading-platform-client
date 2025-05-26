@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import acttraderapi from "@/utils/ActTraderApi";
+import acttraderapi from "@/utils/ActTraderapi";
 import { dispatch } from "../store";
 import { ActTraderStateProps } from "@/types/acttrader";
 
@@ -23,11 +23,12 @@ const acttrader = createSlice({
 
 export const { hasError, getAccountsSuccess} = acttrader.actions;
 
-export function getAccounts({token} : {token : string}) {
+export function getAccounts({accessToken, accountType} : {accessToken : string, accountType: string}) {
     return async () => {
         try {
             const response = await acttraderapi.post("acttrader/all-accounts", {
-                token
+                accessToken,
+                accountType
             });
             dispatch(
                 acttrader.actions.getAccountsSuccess(
