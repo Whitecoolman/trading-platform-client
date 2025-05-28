@@ -30,7 +30,7 @@ export function getAccounts({accessToken, accountType} : {accessToken : string, 
                 accessToken,
                 accountType
             });
-            console.log("🥱 response", response);
+            console.log("🥱 response", response.data.data.accounts.result);
             dispatch(
                 acttrader.actions.getAccountsSuccess(
                     response.data.data.accounts.result
