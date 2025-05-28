@@ -39,9 +39,10 @@ const ActTraderLogin: React.FC<LoginProps> = ({ onAuthSuccess }) => {
       console.log("--------------->actTradertoken", token);
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(response.data.data.user));
-
+      console.log("😙", JSON.stringify(response.data.data.user));
       if (token.length > 0) {
         onAuthSuccess();
+        console.log("😀");
       }
     } catch (error) {
       toast.warn("Login info is wrong");
