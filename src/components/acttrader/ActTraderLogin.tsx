@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { Loader } from "lucide-react";
 import { CiLogin } from "react-icons/ci";
-import axios from "../../utils/ActTraderapi";
+import axios from "../../utils/api";
 import { toast } from "react-toastify";
 
 interface LoginProps {
