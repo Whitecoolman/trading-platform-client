@@ -57,7 +57,7 @@ export default function ActTraderAccountList({
           return (
             <div
               key={index}
-              className="flex flex-col gap-2  outline-1 outline-dashed outline-dark-500 outline-offset-2 glass-panel p-4 rounded-lg"
+              className="flex flex-col gap-8  outline-1 outline-dashed outline-dark-500 outline-offset-2 glass-panel p-4 rounded-lg"
             >
               <div className="flex justify-start items-center py-1 px-4 gap-3 border-b border-dark-300">
                 <Wallet className="h-8 w-8 text-accent" />
@@ -80,7 +80,7 @@ export default function ActTraderAccountList({
               <div className="grid md:grid-cols-2 gap-2 grid-cols-1">
                 <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
                   <span className="text-gray-400 text-sm">Balance </span>
-                  <span className="text-md">{account.UsedMargin}</span>
+                  <span className="text-md">{account.Balance}</span>
                 </div>
                 <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
                   <span className="text-gray-400 text-sm">
