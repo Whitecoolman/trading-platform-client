@@ -29,7 +29,7 @@ const ActTraderLogin: React.FC<LoginProps> = ({ onAuthSuccess }) => {
   const handleLogin = async (): Promise<void> => {
     try {
       setLoading(true);
-      const response = await axios.post<LoginResponse>("acttrader/login", {
+      const response = await axios.post<LoginResponse>("tradelocker/login", {
         username,
         password,
         accountType,
