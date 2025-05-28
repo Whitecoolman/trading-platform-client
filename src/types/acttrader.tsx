@@ -1,5 +1,6 @@
 export interface ActTraderAccount {
     AccountID :  string;
+    name : string;
     Balance : string;
     TraderID : string;
     Currency : string;

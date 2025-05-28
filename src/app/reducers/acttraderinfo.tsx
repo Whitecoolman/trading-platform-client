@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import ActTraderapi from "@/utils/ActTraderApi";
+import ActTraderapi from "@/utils/ActTraderapi";
 import { dispatch } from "../store";
 
 import { ActTraderInfoStateProps } from "@/types/acttrader";
@@ -29,20 +29,5 @@ const acttraderInfo = createSlice({
 })
 
 export const {hasError, getAccountsInfoSuccess} = acttraderInfo.actions;
-
-export function getAccountInfo({} : {}){
-    return async () => {
-        try{
-            const response = await ActTraderapi.post ("actrader/info", {
-
-            })
-            dispatch(
-                acttraderInfo.actions.getAccountsInfoSuccess(response.data.data)
-            )
-        } catch(err) {
-            dispatch(acttraderInfo.actions.hasError(err));
-        }
-    }
-}
 
 export default acttraderInfo.reducer;

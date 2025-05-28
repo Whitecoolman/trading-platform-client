@@ -1,21 +1,20 @@
 import { dispatch, useSelector } from "@/app/store";
 import { getAccounts } from "@/app/reducers/Acttrader";
-import {LuLogOut} from "react-icons/lu";
+import { LuLogOut } from "react-icons/lu";
 import { useEffect } from "react";
-import {Wallet} from "lucide-react";
+import { Wallet } from "lucide-react";
 import { UserParams } from "@/types/acttrader";
 import { ActtraderAccountListProps } from "@/types/acttrader";
-import { getAccountInfo } from "@/app/reducers/acttraderinfo";
 
 export default function ActTraderAccountList({
     onLogout,
 } : ActtraderAccountListProps){
     const accounts = useSelector((state) => state.acttrader.accounts);
-    const accountInfo = useSelector((state) => state.acttraderInfo?.accountInfo)
     const accessToken = localStorage.getItem("accessToken");
     const acttraderUser : UserParams | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") as string)
     : null;
+
     useEffect(() => {
         const fetchData = async () => {
             if(accessToken && acttraderUser) {
@@ -28,16 +27,8 @@ export default function ActTraderAccountList({
         }
         fetchData();
     }, []);
-    useEffect(() => {
-        if(accessToken & acttraderUser) {
-            accounts.forEach((account) => {
-                dispatch(
-                    getAccountInfo({
-                    })
-                )
-            })
-        }
-    }, [accounts, acttraderUser]);
+
+
     return(
         <div className="w-full flex flex-col justify-start items-start h-full gap-5">
       <div className="w-full flex justify-between items-center gap-4">
@@ -59,8 +50,8 @@ export default function ActTraderAccountList({
       </div>
       <div className="w-full grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-4">
         {accounts?.map((account, index) => {
-          const info = accountInfo.find(
-            (item) => String(item.accountId) === account.id
+          const info = accounts.find(
+            (item) => String(item.AccountID) === account.AccountID
           );
           return (
             <div
@@ -75,15 +66,12 @@ export default function ActTraderAccountList({
                     <div className="flex justify-center items-center gap-2 text-gray-400">
                       <span>ID: </span>
                       <span className="text-sm">
-                        {account.id}-{account.accNum}
+                        {account.AccountID}-{account.TraderID}
                       </span>
                     </div>
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                    <span className="text-[12px] text-green-500">
-                      {account.status}
-                    </span>
                     <span className="text-[12px] text-rose-700">
-                      {account.currency}
+                      {account.Currency}
                     </span>
                   </div>
                 </div>
@@ -91,23 +79,13 @@ export default function ActTraderAccountList({
               <div className="grid md:grid-cols-2 gap-2 grid-cols-1">
                 <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
                   <span className="text-gray-400 text-sm">Balance </span>
-                  <span className="text-md">{account.accountBalance}</span>
+                  <span className="text-md">{account.UsedMargin}</span>
                 </div>
                 <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
                   <span className="text-gray-400 text-sm">
                     Projected Balance:{" "}
                   </span>
-                  <span className="text-md">{info?.projectedBalance}</span>
-                </div>
-                <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
-                  <span className="text-gray-400 text-sm">
-                    Available Funds:{" "}
-                  </span>
-                  <span className="text-md">{info?.availableFunds}</span>
-                </div>
-                <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
-                  <span className="text-gray-400 text-sm">Margin: </span>
-                  <span className="text-md">{info?.initialMarginReq}</span>
+                  <span className="text-md">{account.UsedMargin}</span>
                 </div>
               </div>
             </div>

@@ -32,7 +32,7 @@ export function getAccounts({accessToken, accountType} : {accessToken : string, 
             });
             dispatch(
                 acttrader.actions.getAccountsSuccess(
-                    response.data.data.accounts.accounts
+                    response.data.result
                 )
             );
         }
