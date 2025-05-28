@@ -35,10 +35,10 @@ export default function ActTraderAccountList({
       <div className="w-full flex justify-between items-center gap-4">
         <div>
           <h1 className="text-3xl font-medium text-white tracking-tight">
-            Acttrader
+            ActTrader
           </h1>
           <p className="text-gray-400 mt-1">
-            Manage your acttrader accounts and monitor performance
+            Manage your actTrader accounts and monitor performance
           </p>
         </div>
         <button
