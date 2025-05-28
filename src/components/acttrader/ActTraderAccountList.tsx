@@ -11,6 +11,7 @@ export default function ActTraderAccountList({
 } : ActtraderAccountListProps){
     const accounts = useSelector((state) => state.acttrader.accounts);
     const accessToken = localStorage.getItem("accessToken");
+    console.log("😎", accessToken);
     const acttraderUser : UserParams | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") as string)
     : null;
