@@ -50,9 +50,9 @@ export default function ActTraderAccountList({
       </div>
       <div className="w-full grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-4">
         {accounts?.map((account, index) => {
-          const info = accounts.find(
-            (item) => String(item.AccountID) === account.AccountID
-          );
+        //   const info = accounts.find(
+        //     (item) => String(item.AccountID) === account.AccountID
+        //   );
           return (
             <div
               key={index}

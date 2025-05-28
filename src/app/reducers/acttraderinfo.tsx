@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import ActTraderapi from "@/utils/ActTraderapi";
-import { dispatch } from "../store";
+// import ActTraderapi from "@/utils/ActTraderapi";
+// import { dispatch } from "../store";
 
 import { ActTraderInfoStateProps } from "@/types/acttrader";
 const initialState : ActTraderInfoStateProps = {
