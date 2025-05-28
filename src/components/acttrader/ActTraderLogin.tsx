@@ -2,15 +2,52 @@ import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { Loader } from "lucide-react";
 import { CiLogin } from "react-icons/ci";
+import axios from "../../utils/ActTraderapi";
+import {toast} from "react-toastify";
 
-export default function ActTraderLogin() {
+interface LoginProps {
+  onAuthSuccess : () => void;
+}
+
+interface LoginResponse {
+  data: {
+    token : string;
+    user : {
+      email: string;
+      server: string;
+      accountType: string;
+    }
+  }
+}
+const ActTraderLogin : React.FC<LoginProps> = ({ onAuthSuccess }) =>{
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [accountType, setAccountType] = useState<string>("DEMO");
   const [loading, setLoading] = useState<boolean>(false);
-  const handleLogin = () => {
-    setLoading(false);
-  };
+  const handlelogin = async () : Promise<void> => {
+    try{
+      setLoading(true);
+      const response = await axios.post<LoginResponse>("acttrader/login", {
+         username,
+         password,
+         accountType,
+    });
+    const token = response.data.data.token;
+    console.log("--------------->actTradertoken", token);
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(response.data.data.user));
+    if (token.length > 0){
+      onAuthSuccess();
+    }
+    }
+    catch (error){
+      toast.warn("Login info is wrong");
+    }
+    finally{
+      setLoading(false);
+    }
+  }
   return (
     <div>
       <div className="bg-[#070707] p-6 rounded shadow-md w-96 border border-[#333333] border-dashed">
@@ -79,7 +116,7 @@ export default function ActTraderLogin() {
           <div className="mb-4 w-[80%]">
             <button
               className=" w-full bg-blue-500 outline-1 outline-dashed rounded-lg outline-blue-500 outline-offset-2 p-1 flex justify-center items-center gap-2"
-              onClick={handleLogin}
+              onClick={ handlelogin }
             >
               {loading && <Loader className="h-5 w-5 mr-2 animate-spin" />}
               {!loading && <CiLogin className="w-5 h-5" />}
@@ -91,3 +128,5 @@ export default function ActTraderLogin() {
     </div>
   );
 }
+
+export default ActTraderLogin
