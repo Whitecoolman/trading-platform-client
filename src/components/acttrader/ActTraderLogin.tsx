@@ -34,7 +34,7 @@ const ActTraderLogin: React.FC<LoginProps> = ({ onAuthSuccess }) => {
         password,
         accountType,
       });
-
+      console.log("Response 😀", response);
       const token = response.data.data.token;
       console.log("--------------->actTradertoken", token);
       localStorage.setItem("token", token);
