@@ -27,7 +27,7 @@ export default function ActTraderAccountList({
             }
         }
         fetchData();
-    }, []);
+    }, [acttraderUser]);
 
 
     return(
