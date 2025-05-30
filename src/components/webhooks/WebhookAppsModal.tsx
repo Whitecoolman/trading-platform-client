@@ -27,6 +27,7 @@ export default function WebhookAppsModal({
   const tradelockerAccounts = useSelector(
     (state) => state.tradelocker.accounts
   );
+  const acttraderAccounts = useSelector((state) => state.acttrader.accounts);
   const [accountId, setAccountId] = useState<string>("default"); //MetaTrader....
   const [selectedMetaTrader, setSelectedMetaTrader] =
     useState<string>(accountName);
@@ -84,6 +85,16 @@ export default function WebhookAppsModal({
       setSelectedAccNum(selectedAccNum.accNum);
     }
   }, [selectedTradeLocker, tradelockerAccounts]);
+
+  useEffect(() => {
+    const selectedAccount = acttraderAccounts.find(
+      (account) => account.AccountID === selectedActTrader
+    )
+    if (selectedAccount){
+      setAccountId(selectedAccount.AccountID)
+    }
+  }, [selectedActTrader, acttraderAccounts])
+
   const handleConnect = (appName: string) => {
     setLoadingConnect({ appName, loader: true });
     appName == "MetaTrader" &&
@@ -92,6 +103,7 @@ export default function WebhookAppsModal({
     appName == "TradeLocker" &&
       selectedTradeLocker == "default" &&
       toast.info("Please select the account");
+    appName == "ActTrader" && selectedActTrader == "default" && toast.info("Please select the account")
     if (user) {
       dispatch(
         connectWebhook({
@@ -138,6 +150,9 @@ export default function WebhookAppsModal({
       return webhook.accountId_m;
     } else if (appName == "TradeLocker") {
       return webhook.accountId_t;
+    }
+    else {
+      return webhook.accountId_a;
     }
   };
   if (!isOpen) return null;

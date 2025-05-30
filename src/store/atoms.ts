@@ -12,7 +12,7 @@ import type {
 export const userAtom = atom<User | null>(null);
 export const isAuthenticatedAtom = atom((get) => !!get(userAtom));
 
-// Trading
+// Trading   
 export const activeTradesAtom = atom<Trade[]>([]);
 export const tradingBalanceAtom = atom(0);
 export const tradingStatsAtom = atom({
