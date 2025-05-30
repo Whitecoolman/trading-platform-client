@@ -36,6 +36,7 @@ const TradeLockerLogin: React.FC<LoginProps> = ({ onAuthSuccess }) => {
       const accessToken = response.data.data.accessToken;
       const refreshToken = response.data.data.refreshToken;
       console.log("-----------tradelocker authtoken------->", accessToken);
+      console.log("😋😋😋" , JSON.stringify(response.data.data.user));
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(response.data.data.user));
