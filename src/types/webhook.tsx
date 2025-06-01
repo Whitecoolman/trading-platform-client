@@ -2,6 +2,7 @@ export interface WebhookConfig {
   id: string;
   accountId_m: string;
   accountId_t: string;
+  accountId_a: string;
   webhookName: string;
   webhookMode: string;
   symbol: string;
