@@ -131,16 +131,22 @@ export default function WebhookAppsModal({
       dispatch(
         connectWebhook({
           email: user.email,
-          accountId : (appName === "MetaTrader") ? accountId
-           : (appName === "TraderLocker") ? selectedTradeLocker
-           : selectedActTrader,
+          accountId: (appName === "MetaTrader") ? accountId
+                    : (appName === "TraderLocker") ? selectedTradeLocker
+                    : selectedActTrader,
           webhookName: webhook.webhookName,
           webhookMode: webhook.webhookMode,
           symbol: webhook.symbol,
           appName,
-          accNum: appName == "MetaTrader" ? "" : appName == "TraderLocker" ? selectedAccNum : "",
-          accountType: appName == "MetaTrader" ? "" : appName == "TraderLocker" ? selectedAccountType : AtselectedAccountType,
-          refreshToken: appName == "MetaTrader" ? "" : appName == "TraderLocker" ? refreshToken : "",
+          accNum: (appName === "MetaTrader" || appName === "ActTrader") ? "" 
+                  : (appName === "TraderLocker") ? selectedAccNum
+                  : "",
+          accountType: (appName === "MetaTrader") ? "" 
+                       : (appName === "TraderLocker") ? selectedAccountType
+                       : AtselectedAccountType,
+          refreshToken: (appName === "MetaTrader") ? "" 
+                        : (appName === "TraderLocker") ? refreshToken
+                        : "",
         })
       ).then(() => {
         setLoadingConnect({ appName, loader: false });
