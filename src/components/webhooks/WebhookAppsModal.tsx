@@ -123,19 +123,17 @@ export default function WebhookAppsModal({
 
   const handleConnect = (appName: string) => {
     setLoadingConnect({ appName, loader: true });
-    appName == "MetaTrader" &&
-      selectedMetaTrader == "default" &&
-      toast.info("Please select the account");
-    appName == "TradeLocker" &&
-      selectedTradeLocker == "default" &&
-      toast.info("Please select the account");
-    appName == "ActTrader" && selectedActTrader == "default" && 
-    toast.info("Please select the account");
+    appName == "MetaTrader" && selectedMetaTrader == "default" && toast.info("Please select the account");
+    appName == "TradeLocker" && selectedTradeLocker == "default" && toast.info("Please select the account");
+    appName == "ActTrader" && selectedActTrader == "default" && toast.info("Please select the account");
+    console.log("selectedTradeLocker", selectedTradeLocker);
     if (user) {
       dispatch(
         connectWebhook({
           email: user.email,
-          accountId: appName == "MetaTrader" ? accountId : appName == "TraderLocker" ? selectedTradeLocker : selectedActTrader,
+          accountId : (appName === "MetaTrader") ? accountId
+           : (appName === "TraderLocker") ? selectedTradeLocker
+           : selectedActTrader,
           webhookName: webhook.webhookName,
           webhookMode: webhook.webhookMode,
           symbol: webhook.symbol,
