@@ -460,6 +460,9 @@ export default function WebhookCard({
                 {webhook.accountId_t && (
                   <img src="/tradelocker-logo.svg" alt="" className="w-5 h-5" />
                 )}
+                {webhook.accountId_a && (
+                  <img src="/acttrader_logo.svg" alt = "" className="w-5 h-5"/>
+                )}
               </div>
             )}
           </div>

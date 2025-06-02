@@ -114,7 +114,7 @@ export default function WebhookAppsModal({
       dispatch(
         connectWebhook({
           email: user.email,
-          accountId: appName == "MetaTrader" ? accountId : selectedTradeLocker,
+          accountId: appName == "MetaTrader" ? accountId : appName == "TraderLocker" ? selectedTradeLocker : selectedActTrader,
           webhookName: webhook.webhookName,
           webhookMode: webhook.webhookMode,
           symbol: webhook.symbol,
