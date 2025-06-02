@@ -130,14 +130,14 @@ export default function WebhookAppsModal({
       dispatch(
         connectWebhook({
           email: user.email,
-          accountId: appName === "MetaTrader" ? accountId : appName === "TraderLocker" ? selectedTradeLocker : selectedActTrader,
+          accountId: appName === "MetaTrader" ? accountId : appName === "TradeLocker" ? selectedTradeLocker : selectedActTrader,
           webhookName: webhook.webhookName,
           webhookMode: webhook.webhookMode,
           symbol: webhook.symbol,
           appName,
-          accNum: appName === "MetaTrader" ? "" : appName === "TraderLocker" ? selectedAccNum : "",
-          accountType: appName === "MetaTrader" ? "" : appName === "TraderLocker" ? selectedAccountType : AtselectedAccountType,
-          refreshToken: appName === "MetaTrader" ? "" : appName === "TraderLocker" ? refreshToken : "",
+          accNum: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? selectedAccNum : "",
+          accountType: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? selectedAccountType : AtselectedAccountType,
+          refreshToken: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? refreshToken : "",
         })
       ).then(() => {
         setLoadingConnect({ appName, loader: false });
@@ -283,7 +283,7 @@ export default function WebhookAppsModal({
                       >
                         <option value="default">default</option>
                         {
-                          acttraderAccounts.map((account, index) => (
+                          acttraderAccounts?.map((account, index) => (
                             <option key = {index} value = {account.AccountID}>
                               {account.AccountID}
                             </option>
