@@ -17,17 +17,12 @@ export default function ActTraderAccountList({
     : null;
 
     useEffect(() => {
-        const fetchData = async () => {
             if(accessToken && acttraderUser) {
-                await dispatch(
+                 dispatch(
                     getAccounts({accessToken, accountType : acttraderUser.accountType})
                 );
-            } else {
-                onLogout();
             }
-        }
-        fetchData();
-    }, []);
+    }, [acttraderUser]);
 
 
     return(
