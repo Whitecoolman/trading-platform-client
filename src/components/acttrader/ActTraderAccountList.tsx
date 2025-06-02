@@ -62,7 +62,7 @@ export default function ActTraderAccountList({
                     <div className="flex justify-center items-center gap-2 text-gray-400">
                       <span>ID: </span>
                       <span className="text-sm">
-                        {account.AccountID}-{account.TraderID}
+                        {account.AccountID}
                       </span>
                     </div>
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
@@ -79,9 +79,17 @@ export default function ActTraderAccountList({
                 </div>
                 <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
                   <span className="text-gray-400 text-sm">
-                    Projected Balance:{" "}
+                    TraderID:{" "}
                   </span>
+                  <span className="text-md">{account.TraderID}</span>
+                </div>
+                <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
+                  <span className="text-gray-400 text-sm">Margin:{" "} </span>
                   <span className="text-md">{account.UsedMargin}</span>
+                </div>
+                <div className="glass-panel flex justify-between items-center rounded-lg p-3 gap-3">
+                  <span className="text-gray-400 text-sm">Reserved:{" "} </span>
+                  <span className="text-md">{account.Reserved}</span>
                 </div>
               </div>
             </div>
