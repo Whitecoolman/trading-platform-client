@@ -11,7 +11,7 @@ interface LoginProps {
 
 interface LoginResponse {
   data: {
-    accessToken: string;
+    AtaccessToken: string;
     user: {
       email: string;
       server: string;
@@ -35,7 +35,7 @@ const ActTraderLogin: React.FC<LoginProps> = ({ onAuthSuccess }) => {
         accountType,
       });
       console.log("Response 😀", response);
-      const AtaccessToken = response.data.data.accessToken;
+      const AtaccessToken = response.data.data.AtaccessToken;
       console.log("--------------->actTradertoken", AtaccessToken);
       localStorage.setItem("AtaccessToken", AtaccessToken);
       localStorage.setItem("user", JSON.stringify(response.data.data.user));
