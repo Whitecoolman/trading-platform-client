@@ -41,7 +41,7 @@ export default function WebhookAppsModal({
   const [selectedAccNum, setSelectedAccNum] = useState<string>(""); //TradeLocker....
 
   const [selectedAccountType, setSelectedAccountType] = useState<string>("");
-  const [AtselectedAccountType, AtsetSelectedAccountType] = useState<string>("");
+  // const [AtselectedAccountType, AtsetSelectedAccountType] = useState<string>("");
 
   const [refreshToken, setRefreshToken] = useState<string>("");
   const [loadingConnect, setLoadingConnect] = useState<LoadingType>({
