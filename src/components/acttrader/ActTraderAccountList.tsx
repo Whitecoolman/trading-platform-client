@@ -52,7 +52,7 @@ export default function ActTraderAccountList({
           return (
             <div
               key={index}
-              className="flex flex-col gap-8  outline-1 outline-dashed outline-dark-500 outline-offset-2 glass-panel p-4 rounded-lg"
+              className="flex flex-col gap-2  outline-1 outline-dashed outline-dark-500 outline-offset-2 glass-panel p-4 rounded-lg"
             >
               <div className="flex justify-start items-center py-1 px-4 gap-3 border-b border-dark-300">
                 <Wallet className="h-8 w-8 text-accent" />
@@ -66,6 +66,9 @@ export default function ActTraderAccountList({
                       </span>
                     </div>
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span className="text-[12px] text-green-500">
+                      active
+                    </span>
                     <span className="text-[12px] text-rose-700">
                       {account.Currency}
                     </span>
