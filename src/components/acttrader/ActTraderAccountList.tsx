@@ -10,16 +10,16 @@ export default function ActTraderAccountList({
     onLogout,
 } : ActtraderAccountListProps){
     const accounts = useSelector((state) => state.acttrader.accounts);
-    const accessToken = localStorage.getItem("accessToken");
-    console.log("😎", accessToken);
+    const AtaccessToken = localStorage.getItem("AtaccessToken");
+    console.log("😎", AtaccessToken);
     const acttraderUser : UserParams | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") as string)
     : null;
 
     useEffect(() => {
-            if(accessToken && acttraderUser) {
+            if(AtaccessToken && acttraderUser) {
                  dispatch(
-                    getAccounts({accessToken, accountType : acttraderUser.accountType})
+                    getAccounts({AtaccessToken, accountType : acttraderUser.accountType})
                 );
             }
     }, [acttraderUser]);
