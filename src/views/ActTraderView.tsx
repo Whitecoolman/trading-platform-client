@@ -7,12 +7,12 @@ export default function ActTraderView() {
     setIsAuthenticated(true);
   }
   const handleLogout = () : void => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem("AtaccessToken");
     localStorage.removeItem("user");
     setIsAuthenticated(false);
   }
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("AtaccessToken");
     if(accessToken) {
       setIsAuthenticated(true);
     }
