@@ -108,7 +108,8 @@ export default function WebhookAppsModal({
     appName == "TradeLocker" &&
       selectedTradeLocker == "default" &&
       toast.info("Please select the account");
-    appName == "ActTrader" && selectedActTrader == "default" && toast.info("Please select the account")
+    appName == "ActTrader" && selectedActTrader == "default" && 
+    toast.info("Please select the account");
     if (user) {
       dispatch(
         connectWebhook({
@@ -161,7 +162,7 @@ export default function WebhookAppsModal({
     }
   };
   if (!isOpen) return null;
-
+  console.log("acttraderAccounts ---------->" , acttraderAccounts);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div
@@ -265,6 +266,14 @@ export default function WebhookAppsModal({
                             text-sm m-1"
                       >
                         <option value="default">default</option>
+                        {
+
+                          acttraderAccounts.map((account, index) => (
+                            <option key = {index} value = {account.AccountID}>
+                              {account.AccountID}
+                            </option>
+                          ))
+                        }
                       </select>
                     )}
                   </div>
