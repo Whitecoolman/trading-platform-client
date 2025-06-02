@@ -136,8 +136,9 @@ export default function WebhookAppsModal({
           symbol: webhook.symbol,
           appName,
           accNum: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? selectedAccNum : "",
-          accountType: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? selectedAccountType : AtselectedAccountType,
+          accountType: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? selectedAccountType : "",
           refreshToken: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? refreshToken : "",
+          AtaccountType: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? "" : AtselectedAccountType,
         })
       ).then(() => {
         setLoadingConnect({ appName, loader: false });
