@@ -3,7 +3,7 @@ import { getAccounts } from "@/app/reducers/Acttrader";
 import { LuLogOut } from "react-icons/lu";
 import { useEffect } from "react";
 import { Wallet } from "lucide-react";
-import { UserParams } from "@/types/acttrader";
+import { AtUserParams } from "@/types/acttrader";
 import { ActtraderAccountListProps } from "@/types/acttrader";
 
 export default function ActTraderAccountList({
@@ -12,7 +12,7 @@ export default function ActTraderAccountList({
     const accounts = useSelector((state) => state.acttrader.accounts);
     const AtaccessToken = localStorage.getItem("AtaccessToken");
     console.log("😎", AtaccessToken);
-    const acttraderUser : UserParams | null = localStorage.getItem("user")
+    const acttraderUser : AtUserParams | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") as string)
     : null;
 

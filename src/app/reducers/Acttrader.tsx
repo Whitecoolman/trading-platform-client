@@ -23,7 +23,7 @@ const acttrader = createSlice({
 
 export const { hasError, getAccountsSuccess} = acttrader.actions;
 
-export function getAccounts({AtaccessToken, accountType} : {AtaccessToken : string, accountType: string}) {
+export function getAccounts({AtaccessToken, accountType} : { AtaccessToken : string, accountType: string}) {
     return async () => {
         try {
             const response = await api.post("acttrader/all-accounts", {

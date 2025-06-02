@@ -17,7 +17,7 @@ export interface ActTraderInfoStateProps{
     error : Object | string | null;
 }
 
-export interface UserParams{
+export interface AtUserParams{
     username : string;
     accountType: string;
 }

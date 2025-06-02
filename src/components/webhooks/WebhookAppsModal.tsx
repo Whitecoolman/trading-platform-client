@@ -8,7 +8,9 @@ import { userAtom } from "@/store/atoms";
 import { useSelector, dispatch } from "@/app/store";
 import { getAccounts } from "@/app/reducers/metaAccount";
 import { getAccounts as getTradeLockerAccounts } from "@/app/reducers/tradelocker";
+import { getAccounts as getActtraderAccounts } from "@/app/reducers/Acttrader";
 import { UserParams } from "@/types/tradeLocker";
+import { AtUserParams } from "@/types/acttrader";
 import { connectWebhook, disconnectWebhook } from "@/app/reducers/webhook";
 import { toast } from "react-toastify";
 
@@ -38,9 +40,11 @@ export default function WebhookAppsModal({
   const [selectedTradeLocker, setSelectedTradeLocker] = useState<string>(
     webhook.accountId_t
   );
+
   const [selectedActTrader, setSelectedActTrader] = useState<string>(webhook.accountId_a);
   const [selectedAccNum, setSelectedAccNum] = useState<string>(""); //TradeLocker....
   const [selectedAccountType, setSelectedAccountType] = useState<string>("");
+  const [AtselectedAccountType, AtsetSelectedAccountType] = useState<string>("");
   const [refreshToken, setRefreshToken] = useState<string>("");
   const [loadingConnect, setLoadingConnect] = useState<LoadingType>({
     appName: "",
@@ -54,7 +58,11 @@ export default function WebhookAppsModal({
     console.log("UseEffect user", user);
     if (user?.email) dispatch(getAccounts(user.email));
     const accessToken = localStorage.getItem("accessToken");
+    const AtaccessToken = localStorage.getItem("AtaccessToken");
     const refreshToken = localStorage.getItem("refreshToken");
+    const userActtrader : AtUserParams | null = JSON.parse(
+      localStorage.getItem("Atuser") || "null"
+    )
     const userTradeLocker: UserParams | null = JSON.parse(
       localStorage.getItem("user") || "null"
     );
@@ -72,7 +80,20 @@ export default function WebhookAppsModal({
         })
       );
     }
+    if(userActtrader){
+      AtsetSelectedAccountType(userActtrader.accountType);
+    }
+    if (AtaccessToken && userActtrader) {
+      dispatch(
+        getActtraderAccounts({
+          AtaccessToken, 
+          accountType: userActtrader.accountType,
+        })
+      )
+    }
   }, [dispatch, user]);
+
+  
   useEffect(() => {
     const selectedAccount = metaAccounts.find(
       (account) => account.accountName === selectedMetaTrader
@@ -119,9 +140,9 @@ export default function WebhookAppsModal({
           webhookMode: webhook.webhookMode,
           symbol: webhook.symbol,
           appName,
-          accNum: appName == "MetaTrader" ? "" : selectedAccNum,
-          accountType: appName == "MetaTrader" ? "" : selectedAccountType,
-          refreshToken: appName == "MetaTrader" ? "" : refreshToken,
+          accNum: appName == "MetaTrader" ? "" : appName == "TraderLocker" ? selectedAccNum : "",
+          accountType: appName == "MetaTrader" ? "" : appName == "TraderLocker" ? selectedAccountType : AtselectedAccountType,
+          refreshToken: appName == "MetaTrader" ? "" : appName == "TraderLocker" ? refreshToken : "",
         })
       ).then(() => {
         setLoadingConnect({ appName, loader: false });
