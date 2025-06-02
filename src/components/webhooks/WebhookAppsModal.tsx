@@ -92,11 +92,11 @@ export default function WebhookAppsModal({
   }, [selectedTradeLocker, tradelockerAccounts]);
 
   useEffect(() => {
-    const selectedAccount = acttraderAccounts.find(
+    const selectedAtAccount = acttraderAccounts.find(
       (account) => account.AccountID === selectedActTrader
     )
-    if (selectedAccount){
-      setAccountId(selectedAccount.AccountID)
+    if (selectedAtAccount){
+      setAccountId(selectedAtAccount.AccountID)
     }
   }, [selectedActTrader, acttraderAccounts])
 
@@ -267,7 +267,6 @@ export default function WebhookAppsModal({
                       >
                         <option value="default">default</option>
                         {
-
                           acttraderAccounts.map((account, index) => (
                             <option key = {index} value = {account.AccountID}>
                               {account.AccountID}
