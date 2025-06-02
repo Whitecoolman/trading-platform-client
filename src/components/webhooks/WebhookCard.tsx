@@ -449,7 +449,7 @@ export default function WebhookCard({
                 </span>
               </div>
             )}
-            {(webhook.accountId_m || webhook.accountId_t) && (
+            {(webhook.accountId_m || webhook.accountId_t || webhook.accountId_a) && (
               <div
                 className="px-3 py-2 text-md rounded-lg bg-dark-200/50 text-gray-300
                          border border-dark-300/30 backdrop-blur-sm flex justify-center items-center gap-2"

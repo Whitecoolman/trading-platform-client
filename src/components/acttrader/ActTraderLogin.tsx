@@ -38,7 +38,7 @@ const ActTraderLogin: React.FC<LoginProps> = ({ onAuthSuccess }) => {
       const AtaccessToken = response.data.data.AtaccessToken;
       console.log("--------------->actTradertoken", AtaccessToken);
       localStorage.setItem("AtaccessToken", AtaccessToken);
-      localStorage.setItem("user", JSON.stringify(response.data.data.user));
+      localStorage.setItem("Atuser", JSON.stringify(response.data.data.user));
       console.log("😙", JSON.stringify(response.data.data.user));
       if (AtaccessToken.length > 0) {
         onAuthSuccess();
