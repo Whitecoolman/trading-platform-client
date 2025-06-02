@@ -66,7 +66,7 @@ export default function ActTraderAccountList({
                       </span>
                     </div>
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                    <span className="text-[16px] text-green-500">
+                    <span className="text-[12px] text-green-500">
                       ACTIVE
                     </span>
                     <span className="text-[12px] text-rose-700">
