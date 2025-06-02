@@ -276,6 +276,7 @@ export function connectWebhook({
   accNum,
   accountType,
   refreshToken,
+  AtaccountType,
 }: {
   email: string;
   accountId: string;
@@ -286,6 +287,7 @@ export function connectWebhook({
   accNum: string;
   accountType: string;
   refreshToken: string;
+  AtaccountType: string;
 }) {
   return async () => {
     try {
@@ -299,6 +301,7 @@ export function connectWebhook({
         accNum,
         accountType,
         refreshToken,
+        AtaccountType
       });
       dispatch(
         webhook.actions.udpateWebhookSuccess(response.data.data.updatedWebhook)
