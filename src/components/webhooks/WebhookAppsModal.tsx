@@ -174,7 +174,7 @@ export default function WebhookAppsModal({
     } else if (appName == "TradeLocker") {
       return webhook.accountId_t;
     }
-    else {
+    else if(appName == "ActTrader"){
       return webhook.accountId_a;
     }
   };
