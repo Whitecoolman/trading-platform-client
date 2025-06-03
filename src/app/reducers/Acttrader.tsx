@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import api from "@/utils/api";
 import { dispatch } from "../store";
 import { ActTraderStateProps } from "@/types/acttrader";
-import axios from "axios";
 
 const initialState : ActTraderStateProps = {
     error : null,
@@ -25,16 +24,6 @@ const acttrader = createSlice({
 export const { hasError, getAccountsSuccess} = acttrader.actions;
 
 
-interface LoginResponse {
-    data: {
-      AtaccessToken: string;
-      user: {
-        email: string;
-        password: string;
-        accountType: string;
-      };
-    };
-  }
 
 export function getAccounts({AtaccessToken, accountType} : { AtaccessToken : string, accountType: string}) {
     return async () => {
