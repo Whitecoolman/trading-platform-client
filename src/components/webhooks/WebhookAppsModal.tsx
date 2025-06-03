@@ -129,6 +129,7 @@ export default function WebhookAppsModal({
     appName == "TradeLocker" && selectedTradeLocker == "default" && toast.info("Please select the account");
     appName == "ActTrader" && selectedActTrader == "default" && toast.info("Please select the account");
     if (user) {
+      console.log("👌 AtselectedAccountType", AtselectedAccountType)
       dispatch(
         connectWebhook({
           email: user.email,
