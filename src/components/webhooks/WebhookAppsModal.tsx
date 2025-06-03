@@ -80,7 +80,9 @@ export default function WebhookAppsModal({
       );
     }
 
+    console.log("userActtrader------------->", userActtrader);
     if(userActtrader){
+      
       AtsetSelectedAccountType(userActtrader.accountType);
     }
     if (AtaccessToken && userActtrader) {
