@@ -44,18 +44,18 @@ export function getAccounts({AtaccessToken, accountType} : { AtaccessToken : str
                 accountType
             });
             console.log("🥱 response", response.data.data.accounts.result);
-            const username = localStorage.getItem("username");
-            const password = localStorage.getItem("password");
-            if (response.data.data.accounts.result == "undefined") {
-                const response = await axios.post<LoginResponse>("acttrader/login", {
-                    username,
-                    password,
-                    accountType,
-                  });
-                  const AtaccessToken = response.data.data.AtaccessToken;
-                  localStorage.setItem("AtaccessToken", AtaccessToken);
-                  localStorage.setItem("Atuser", JSON.stringify(response.data.data.user));
-            }
+            // const username = localStorage.getItem("username");
+            // const password = localStorage.getItem("password");
+            // if (response.data.data.accounts.result == "undefined") {
+            //     const response = await axios.post<LoginResponse>("acttrader/login", {
+            //         username,
+            //         password,
+            //         accountType,
+            //       });
+            //       const AtaccessToken = response.data.data.AtaccessToken;
+            //       localStorage.setItem("AtaccessToken", AtaccessToken);
+            //       localStorage.setItem("Atuser", JSON.stringify(response.data.data.user));
+            // }
             dispatch(
                 acttrader.actions.getAccountsSuccess(
                     response.data.data.accounts.result
