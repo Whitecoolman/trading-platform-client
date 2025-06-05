@@ -1,10 +1,23 @@
 import { dispatch, useSelector } from "@/app/store";
 import { getAccounts } from "@/app/reducers/Acttrader";
 import { LuLogOut } from "react-icons/lu";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Wallet } from "lucide-react";
 import { AtUserParams } from "@/types/acttrader";
 import { ActtraderAccountListProps } from "@/types/acttrader";
+import axios from "../../utils/api";
+import { toast } from "react-toastify";
+
+interface LoginResponse {
+  data: {
+    AtaccessToken: string;
+    user: {
+      email: string;
+      password: string;
+      accountType: string;
+    };
+  };
+}
 
 export default function ActTraderAccountList({
     onLogout,
@@ -15,11 +28,35 @@ export default function ActTraderAccountList({
     const acttraderUser : AtUserParams | null = localStorage.getItem("Atuser")
     ? JSON.parse(localStorage.getItem("Atuser") as string)
     : null;
+    const username = localStorage.getItem("username");
+    const password = localStorage.getItem("password");
+    const AtaccountType = localStorage.getItem("AtaccountType");
+    const [accessToken, setAccessToken] = useState("");
+    const handleLogin = async () => {
+      try {
+        if (!AtaccessToken || AtaccessToken === "undefined") {
+          const response = await axios.post<LoginResponse>("acttrader/login", {
+            username,
+            password,
+            AtaccountType,
+          });
 
+          console.log("🔁 Refreshing AtaccessToken", response);
+          setAccessToken(response.data.data.AtaccessToken);
+        } else {
+          setAccessToken(AtaccessToken);
+        }
+      } catch (err) {
+        toast.warn("Login info is wrong ❌");
+        console.error("Login error:", err);
+      }
+    };
+
+    useEffect(() => {handleLogin()},[accessToken]);
     useEffect(() => {
-            if(AtaccessToken && acttraderUser) {
+            if(accessToken && acttraderUser) {
                  dispatch(
-                    getAccounts({AtaccessToken, accountType : acttraderUser.accountType})
+                    getAccounts({accessToken, accountType : acttraderUser.accountType})
                 );
             }
     }, [acttraderUser]);
