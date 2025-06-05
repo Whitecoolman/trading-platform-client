@@ -51,12 +51,12 @@ export function getAccounts({
       });
 
       const result = res.data?.data?.accounts?.result;
-
+      console.log("result--------->",result);
       if (!result || !Array.isArray(result) || result.length === 0) {
         // Attempt to re-login if account list is empty
         const username = localStorage.getItem("username");
         const password = localStorage.getItem("password");
-
+        console.log("username---------->", username);
         if (!username || !password) {
           throw new Error("Missing credentials from localStorage");
         }
@@ -66,7 +66,7 @@ export function getAccounts({
           password,
           accountType,
         });
-
+        console.log("success✨")
         const newToken = loginRes.data.data.AtaccessToken;
         localStorage.setItem("AtaccessToken", newToken);
         localStorage.setItem("Atuser", JSON.stringify(loginRes.data.data.user));
@@ -75,7 +75,7 @@ export function getAccounts({
           AtaccessToken: newToken,
           accountType,
         });
-
+        console.log("retryRes--------->", retryRes);
         const retryResult = retryRes.data?.data?.accounts?.result;
 
         dispatch(getAccountsSuccess(retryResult || []));
