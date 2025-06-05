@@ -25,10 +25,42 @@ export const { hasError, getAccountsSuccess} = acttrader.actions;
 
 
 
-export function getAccounts({accessToken, accountType} : { accessToken : string, accountType: string}) {
+export function getAccounts({AtaccessToken, accountType} : { AtaccessToken : string, accountType: string}) {
     return async () => {
         try {
             const response = await api.post("acttrader/all-accounts", {
+                AtaccessToken,
+                accountType
+            });
+            console.log("🥱 response", response.data.data.accounts.result);
+            // const username = localStorage.getItem("username");
+            // const password = localStorage.getItem("password");
+            // if (response.data.data.accounts.result == "undefined") {
+            //     const response = await axios.post<LoginResponse>("acttrader/login", {
+            //         username,
+            //         password,
+            //         accountType,
+            //       });
+            //       const AtaccessToken = response.data.data.AtaccessToken;
+            //       localStorage.setItem("AtaccessToken", AtaccessToken);
+            //       localStorage.setItem("Atuser", JSON.stringify(response.data.data.user));
+            // }
+            dispatch(
+                acttrader.actions.getAccountsSuccess(
+                    response.data.data.accounts.result
+                )
+            );
+        }
+        catch(err) {
+            dispatch(acttrader.actions.hasError(err));
+        }
+    }
+}
+
+export function getAccounts2({accessToken, accountType} : { accessToken : string, accountType: string}) {
+    return async () => {
+        try {
+            const response = await api.post("acttrader/all-accounts2", {
                 accessToken,
                 accountType
             });

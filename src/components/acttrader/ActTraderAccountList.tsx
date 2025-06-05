@@ -1,5 +1,5 @@
 import { dispatch, useSelector } from "@/app/store";
-import { getAccounts } from "@/app/reducers/Acttrader";
+import { getAccounts2 } from "@/app/reducers/Acttrader";
 import { LuLogOut } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { Wallet } from "lucide-react";
@@ -56,7 +56,7 @@ export default function ActTraderAccountList({
     useEffect(() => {
             if(accessToken && acttraderUser) {
                  dispatch(
-                    getAccounts({accessToken, accountType : acttraderUser.accountType})
+                    getAccounts2({accessToken, accountType : acttraderUser.accountType})
                 );
             }
     }, [acttraderUser]);
