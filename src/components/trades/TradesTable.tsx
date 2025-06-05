@@ -74,6 +74,9 @@ export default function TradesTable({
           setLoading(false)
         );
     }
+    else if(accountType == "ActTrader"){
+      
+    }
   }, [accountType, account, accNum]);
   const formatDate = (timestamp: number): string => {
     const date = new Date(timestamp);
