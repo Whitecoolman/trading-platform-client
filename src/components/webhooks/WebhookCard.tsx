@@ -152,6 +152,7 @@ export default function WebhookCard({
     if (webhook.connectionStatus == true) {
       setOpenTradeLoading(true);
       const accessToken = localStorage.getItem("accessToken");
+      const AtaccessToken = localStorage.getItem("AtaccessToken");
       const tradelockerUser: UserParams | null = localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user") as string)
         : null;
@@ -170,6 +171,7 @@ export default function WebhookCard({
               actionType,
               allTrades,
               trailingStopLoss,
+              AtaccessToken,
             })
           ).then(() => {
             setOpenTradeLoading(false);

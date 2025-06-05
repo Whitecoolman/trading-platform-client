@@ -8,7 +8,7 @@ interface LoginResponse {
   data: {
     AtaccessToken: string;
     user: {
-      email: string;
+      username: string;
       password: string;
       accountType: string;
     };
