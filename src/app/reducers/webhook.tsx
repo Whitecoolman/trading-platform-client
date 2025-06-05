@@ -533,6 +533,7 @@ export function openBasicTrade({
   actionType,
   allTrades,
   trailingStopLoss,
+  AtaccessToken,
 }: {
   email: string;
   webhookName: string;
@@ -545,6 +546,7 @@ export function openBasicTrade({
   actionType: string;
   allTrades: boolean;
   trailingStopLoss: boolean;
+  AtaccessToken: string | null;
 }) {
   return async () => {
     try {
@@ -560,6 +562,7 @@ export function openBasicTrade({
         actionType,
         allTrades,
         trailingStopLoss,
+        AtaccessToken
       });
       if (actionType == "create") {
         dispatch(
