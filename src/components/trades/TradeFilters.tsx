@@ -15,7 +15,7 @@ export default function TradeFilters() {
   const tradelockerAccounts = useSelector(
     (state) => state.tradelocker.accounts
   );
-
+  const acttraderAccounts = useSelector((state) => state.acttrader.accounts);
   const handleAccountTypeChange = (accountType: string) => {
     setSelectedAccountType(accountType);
   };
@@ -27,6 +27,9 @@ export default function TradeFilters() {
       tradelockerAccounts.length > 0
     ) {
       setSelectedAccount(tradelockerAccounts[0].id);
+    }
+    else if(selectedAccountType === "ActTrader" && acttraderAccounts.length > 0){
+      setSelectedAccount(acttraderAccounts[0].AccountID);
     }
   }, [selectedAccountType, metaAccounts, tradelockerAccounts]);
 
@@ -63,12 +66,17 @@ export default function TradeFilters() {
                   {account.accountName}
                 </option>
               ))
-            : tradelockerAccounts.map((account, index) => (
+            : selectedAccountType == "TradeLocker" ? tradelockerAccounts.map((account, index) => (
                 <option key={index} value={account.id}>
                   {account.accNum}-{account.id}
                 </option>
-              ))}
-        </select>
+              )) : acttraderAccounts.map((account, index) =>(
+                  <option key = {index} value = {account.AccountID}>
+                    {account.AccountID}
+                  </option>
+                ))
+              }
+              </select>
       </div>
       {/* Time Filter */}
       {/* <div className="relative min-w-[160px]">
