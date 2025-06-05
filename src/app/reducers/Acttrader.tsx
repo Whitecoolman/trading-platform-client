@@ -79,9 +79,10 @@ export function getAccounts({
 
         dispatch(getAccountsSuccess(retryResult || []));
         console.log("✨ Refetched accounts:", retryResult);
-      } else {
+      } 
+      else {
         dispatch(getAccountsSuccess(result));
-        console.log("🥱 Fetched accounts:", result);
+        // console.log("🥱 Fetched accounts:", result);
       }
     } catch (err) {
       console.error("❌ Error in getAccounts:", err);
