@@ -17,7 +17,7 @@ export default function AlertsList({ alerts, expanded }: AlertsListProps) {
 
   // Slice the sorted alerts to show only the visibleCount
   const visibleAlerts = sortedAlerts.slice(0, visibleCount);
-
+  console.log("🌹 visibleAlerts-------------->", visibleAlerts);
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => Math.min(prevCount + 10, sortedAlerts.length)); // Ensure we don't exceed the total alerts
   };
