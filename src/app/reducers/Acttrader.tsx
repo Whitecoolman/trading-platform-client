@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import api from "@/utils/api";
 import { dispatch } from "../store";
 import { ActTraderStateProps } from "@/types/acttrader";
-import axios from "axios";
 
 interface LoginResponse {
   data: {
@@ -61,7 +60,7 @@ export function getAccounts({
           throw new Error("Missing credentials from localStorage");
         }
 
-        const loginRes = await axios.post<LoginResponse>("acttrader/login", {
+        const loginRes = await api.post<LoginResponse>("acttrader/login", {
           username,
           password,
           accountType,
