@@ -50,6 +50,8 @@ export default function TradesTable({
     
   // }
   // }, [accountType, account]);
+  console.log("🌹🌹🌹", accessToken , "   ", account,"   ",accNum, "   ",tradelockerUser,"   ");
+  
   useEffect(() => {
     setLoading(true);
     if (accountType == "TradeLocker") {
@@ -75,7 +77,7 @@ export default function TradesTable({
         );
     }
     else if(accountType == "ActTrader"){
-      
+
     }
   }, [accountType, account, accNum]);
   const formatDate = (timestamp: number): string => {
