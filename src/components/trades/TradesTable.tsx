@@ -4,6 +4,7 @@ import { dispatch } from "@/app/store";
 import { getTradelockerOrdersHistory } from "@/app/reducers/trade";
 import { getMetaStats } from "@/app/reducers/metaStats";
 import { UserParams } from "@/types/tradeLocker";
+// import { AtUserParams } from "@/types/acttrader";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { userAtom } from "@/store/atoms";
 import { useAtom } from "jotai";
@@ -29,9 +30,13 @@ export default function TradesTable({
   const [accNum, setAccNum] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const accessToken = localStorage.getItem("accessToken");
+  // const AtaccessToken = localStorage.getItem("AtaccessToken");
   const tradelockerUser: UserParams | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") as string)
     : null;
+  // const acttraderUser : AtUserParams | null = localStorage.getItem("Atuser")
+    // ? JSON.parse(localStorage.getItem("Atuser") as string)
+    // : null;
   const tradelockerOrdersHistory = useSelector(
     (state) => state.trade.tradelockerOrdersHistory
   );
@@ -77,7 +82,14 @@ export default function TradesTable({
         );
     }
     else if(accountType == "ActTrader"){
-
+      // acttraderUser && AtaccessToken && 
+      // dispatch(
+      //   getActtraderOrdersHistory({
+      //     AtaccessToken,
+      //     AtaccountId : account,
+      //     AtaccountType : acttraderUser?.AtaccountType,
+      //   })
+      // )
     }
   }, [accountType, account, accNum]);
   const formatDate = (timestamp: number): string => {

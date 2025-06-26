@@ -101,6 +101,31 @@ export function getTradelockerOrdersHistory({
   };
 }
 
+export function getActtraderOrdersHistory({
+  AtaccessToken,
+  AtaccountId,
+  AtaccountType,
+} : {
+  AtaccessToken : string;
+  AtaccountId : string;
+  AtaccountType : string;
+}){
+  return async () => {
+    try{
+      const response = await axios.post("/trade/acttrader/TradeHistory", {
+        AtaccessToken,
+        AtaccountId,
+        AtaccountType
+      });
+      dispatch(
+        getActtraderOrdersHistorySuccess(response.data.data.ordersHistory)
+      );
+    } catch (err : any) {
+      dispatch(trade.actions.hasError(err.response.data.message));
+      toast.warn(err.response.data.message);
+    }
+  }
+ }
 export function getTotalTradesStats({ accountId }: { accountId: string }) {
   return async () => {
     try {
