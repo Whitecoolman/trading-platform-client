@@ -8,7 +8,9 @@ import { userAtom } from "@/store/atoms";
 import { useSelector, dispatch } from "@/app/store";
 import { getAccounts } from "@/app/reducers/metaAccount";
 import { getAccounts as getTradeLockerAccounts } from "@/app/reducers/tradelocker";
+import { getAccounts as getActtraderAccounts } from "@/app/reducers/Acttrader";
 import { UserParams } from "@/types/tradeLocker";
+import { AtUserParams } from "@/types/acttrader";
 import { connectWebhook, disconnectWebhook } from "@/app/reducers/webhook";
 import { toast } from "react-toastify";
 
@@ -23,19 +25,24 @@ export default function WebhookAppsModal({
   accountName,
 }: WebhookAppsModalProps) {
   const user = useAtom(userAtom)[0];
+  console.log("user ------>", user);
   const metaAccounts = useSelector((state) => state.metaAccount.accounts);
   const tradelockerAccounts = useSelector(
     (state) => state.tradelocker.accounts
   );
-  const [accountId, setAccountId] = useState<string>("default"); //MetaTrader....
-  const [selectedMetaTrader, setSelectedMetaTrader] =
-    useState<string>(accountName);
-  const [selectedTradeLocker, setSelectedTradeLocker] = useState<string>(
-    webhook.accountId_t
-  );
-  const [selectedActTrader, setSelectedActTrader] = useState<string>("default");
+  const acttraderAccounts = useSelector((state) => state.acttrader.accounts);
+  const [accountId, setAccountId] = useState<string>("default");
+
+  const [selectedMetaTrader, setSelectedMetaTrader] = useState<string>(accountName);
+  const [selectedTradeLocker, setSelectedTradeLocker] = useState<string>(webhook.accountId_t);
+  console.log("webhook ------>", webhook);
+  const [selectedActTrader, setSelectedActTrader] = useState<string>(webhook.accountId_a);
+
   const [selectedAccNum, setSelectedAccNum] = useState<string>(""); //TradeLocker....
+
   const [selectedAccountType, setSelectedAccountType] = useState<string>("");
+  const [AtselectedAccountType, AtsetSelectedAccountType] = useState<string>("");
+  const [AtaccessToken1, setAtaccessToken] = useState<string>("");
   const [refreshToken, setRefreshToken] = useState<string>("");
   const [loadingConnect, setLoadingConnect] = useState<LoadingType>({
     appName: "",
@@ -48,10 +55,17 @@ export default function WebhookAppsModal({
   useEffect(() => {
     if (user?.email) dispatch(getAccounts(user.email));
     const accessToken = localStorage.getItem("accessToken");
+    const AtaccessToken = localStorage.getItem("AtaccessToken");
+    if(AtaccessToken) setAtaccessToken(AtaccessToken);
     const refreshToken = localStorage.getItem("refreshToken");
+
+    const userActtrader : AtUserParams | null = JSON.parse(
+      localStorage.getItem("Atuser") || "null"
+    )
     const userTradeLocker: UserParams | null = JSON.parse(
       localStorage.getItem("user") || "null"
     );
+
     if (userTradeLocker) {
       setSelectedAccountType(userTradeLocker.accountType);
     }
@@ -66,7 +80,23 @@ export default function WebhookAppsModal({
         })
       );
     }
+
+    console.log("userActtrader------------->", userActtrader);
+    if(userActtrader){
+      
+      AtsetSelectedAccountType(userActtrader.accountType);
+    }
+    if (AtaccessToken && userActtrader) {
+      dispatch(
+        getActtraderAccounts({
+          AtaccessToken, 
+          accountType: userActtrader.accountType,
+        })
+      )
+    }
   }, [dispatch, user]);
+
+  
   useEffect(() => {
     const selectedAccount = metaAccounts.find(
       (account) => account.accountName === selectedMetaTrader
@@ -84,26 +114,36 @@ export default function WebhookAppsModal({
       setSelectedAccNum(selectedAccNum.accNum);
     }
   }, [selectedTradeLocker, tradelockerAccounts]);
+
+  useEffect(() => {
+    const selectedAtAccount = acttraderAccounts?.find(
+      (account) => account.AccountID === selectedActTrader
+    )
+    if (selectedAtAccount){
+      setSelectedActTrader(selectedAtAccount.AccountID)
+    }
+  }, [selectedActTrader, acttraderAccounts])
+
   const handleConnect = (appName: string) => {
     setLoadingConnect({ appName, loader: true });
-    appName == "MetaTrader" &&
-      selectedMetaTrader == "default" &&
-      toast.info("Please select the account");
-    appName == "TradeLocker" &&
-      selectedTradeLocker == "default" &&
-      toast.info("Please select the account");
+    appName == "MetaTrader" && selectedMetaTrader == "default" && toast.info("Please select the account");
+    appName == "TradeLocker" && selectedTradeLocker == "default" && toast.info("Please select the account");
+    appName == "ActTrader" && selectedActTrader == "default" && toast.info("Please select the account");
     if (user) {
+      console.log("👌 AtselectedAccountType", AtselectedAccountType)
       dispatch(
         connectWebhook({
           email: user.email,
-          accountId: appName == "MetaTrader" ? accountId : selectedTradeLocker,
+          accountId: appName === "MetaTrader" ? accountId : appName === "TradeLocker" ? selectedTradeLocker : selectedActTrader,
           webhookName: webhook.webhookName,
           webhookMode: webhook.webhookMode,
           symbol: webhook.symbol,
           appName,
-          accNum: appName == "MetaTrader" ? "" : selectedAccNum,
-          accountType: appName == "MetaTrader" ? "" : selectedAccountType,
-          refreshToken: appName == "MetaTrader" ? "" : refreshToken,
+          accNum: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? selectedAccNum : "",
+          accountType: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? selectedAccountType : "",
+          refreshToken: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? refreshToken : "",
+          AtaccountType: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? "" : AtselectedAccountType,
+          AtaccessToken: appName === "MetaTrader" ? "" : appName === "TradeLocker" ? "" : AtaccessToken1
         })
       ).then(() => {
         setLoadingConnect({ appName, loader: false });
@@ -139,9 +179,12 @@ export default function WebhookAppsModal({
     } else if (appName == "TradeLocker") {
       return webhook.accountId_t;
     }
+    else if(appName == "ActTrader"){
+      return webhook.accountId_a;
+    }
   };
   if (!isOpen) return null;
-
+  console.log("acttraderAccounts ---------->" , acttraderAccounts);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div
@@ -245,6 +288,13 @@ export default function WebhookAppsModal({
                             text-sm m-1"
                       >
                         <option value="default">default</option>
+                        {
+                          acttraderAccounts?.map((account, index) => (
+                            <option key = {index} value = {account.AccountID}>
+                              {account.AccountID}
+                            </option>
+                          ))
+                        }
                       </select>
                     )}
                   </div>

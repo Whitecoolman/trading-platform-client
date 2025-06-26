@@ -8,6 +8,7 @@ import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { userAtom } from "@/store/atoms";
 import { useAtom } from "jotai";
 import Skeleton from "react-loading-skeleton";
+// import { AtUserParams } from "@/types/acttrader";
 import "react-loading-skeleton/dist/skeleton.css";
 export default function TradesTable({
   account,
@@ -20,6 +21,11 @@ export default function TradesTable({
   const tradelockerAccounts = useSelector(
     (state) => state.tradelocker.accounts
   );
+  // const acttraderAccounts = useSelector((state) => state.acttrader.accounts)
+  // const AtaccessToken = localStorage.getItem("AtaccessToken");
+  // const acttraderUser : AtUserParams | null = localStorage.getItem("Atuser")
+    // ? JSON.parse(localStorage.getItem("Atuser") as string)
+    // : null;
   const [accNum, setAccNum] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const accessToken = localStorage.getItem("accessToken");
@@ -38,6 +44,14 @@ export default function TradesTable({
       tradelockerAccount && setAccNum(tradelockerAccount.accNum);
     }
   }, [accountType, account]);
+  // useEffect(() => {
+  //   if(accountType == "ActTrader"){
+  //   const acttraderAccount = acttraderAccounts.find((item) => item.AccountID === account);
+    
+  // }
+  // }, [accountType, account]);
+  console.log("🌹🌹🌹", accessToken , "   ", account,"   ",accNum, "   ",tradelockerUser,"   ");
+  
   useEffect(() => {
     setLoading(true);
     if (accountType == "TradeLocker") {
@@ -55,12 +69,15 @@ export default function TradesTable({
             setLoading(false);
           }, 1000);
         });
-    } else {
+    } else if(accountType == "MetaTrader"){
       user &&
         account &&
         dispatch(getMetaStats(account, user?.email)).then(() =>
           setLoading(false)
         );
+    }
+    else if(accountType == "ActTrader"){
+
     }
   }, [accountType, account, accNum]);
   const formatDate = (timestamp: number): string => {

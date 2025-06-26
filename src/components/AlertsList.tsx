@@ -17,7 +17,7 @@ export default function AlertsList({ alerts, expanded }: AlertsListProps) {
 
   // Slice the sorted alerts to show only the visibleCount
   const visibleAlerts = sortedAlerts.slice(0, visibleCount);
-
+  console.log("🌹 visibleAlerts-------------->", visibleAlerts);
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => Math.min(prevCount + 10, sortedAlerts.length)); // Ensure we don't exceed the total alerts
   };
@@ -83,6 +83,10 @@ export default function AlertsList({ alerts, expanded }: AlertsListProps) {
                         Tradelocker:{" "}
                         {alert.positionId_t ? alert.positionId_t : "N/A"}
                       </p>
+                      <p className="text-gray-300 text-sm">
+                        ActTrader:{" "}
+                        {alert.positionId_a ? alert.positionId_a : "N/A"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -90,6 +94,7 @@ export default function AlertsList({ alerts, expanded }: AlertsListProps) {
                   <div className="text-red-500 flex justify-center items-center gap-2">
                     <span>{alert.positionId_m && "MetaTrader"}</span>
                     <span>{alert.positionId_t && "Tradelocker"}</span>
+                    <span>{alert.positionId_a && "ActTrader"}</span>
                   </div>
                   <div>
                     {alert.createdAt.replace("T", " ").substring(0, 19)}

@@ -152,6 +152,7 @@ export default function WebhookCard({
     if (webhook.connectionStatus == true) {
       setOpenTradeLoading(true);
       const accessToken = localStorage.getItem("accessToken");
+      const AtaccessToken = localStorage.getItem("AtaccessToken");
       const tradelockerUser: UserParams | null = localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user") as string)
         : null;
@@ -170,6 +171,7 @@ export default function WebhookCard({
               actionType,
               allTrades,
               trailingStopLoss,
+              AtaccessToken,
             })
           ).then(() => {
             setOpenTradeLoading(false);
@@ -251,6 +253,7 @@ export default function WebhookCard({
                   >
                     {webhook.accountId_m && <span>{accountName}</span>}
                     <span>{webhook.accountId_t}</span>
+                    <span>{webhook.accountId_a}</span>
                   </div>
                   <span className="text-gray-400">•</span>
                   <div className="flex items-center text-sm">
@@ -449,7 +452,7 @@ export default function WebhookCard({
                 </span>
               </div>
             )}
-            {(webhook.accountId_m || webhook.accountId_t) && (
+            {(webhook.accountId_m || webhook.accountId_t || webhook.accountId_a) && (
               <div
                 className="px-3 py-2 text-md rounded-lg bg-dark-200/50 text-gray-300
                          border border-dark-300/30 backdrop-blur-sm flex justify-center items-center gap-2"
@@ -459,6 +462,9 @@ export default function WebhookCard({
                 )}
                 {webhook.accountId_t && (
                   <img src="/tradelocker-logo.svg" alt="" className="w-5 h-5" />
+                )}
+                {webhook.accountId_a && (
+                  <img src="/acttrader_logo.svg" alt = "" className="w-5 h-5"/>
                 )}
               </div>
             )}

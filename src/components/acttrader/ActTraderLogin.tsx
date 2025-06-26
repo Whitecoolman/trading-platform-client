@@ -2,15 +2,58 @@ import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { Loader } from "lucide-react";
 import { CiLogin } from "react-icons/ci";
+import axios from "../../utils/api";
+import { toast } from "react-toastify";
 
-export default function ActTraderLogin() {
+interface LoginProps {
+  onAuthSuccess: () => void;
+}
+
+interface LoginResponse {
+  data: {
+    AtaccessToken: string;
+    user: {
+      email: string;
+      password: string;
+      accountType: string;
+    };
+  };
+}
+
+const ActTraderLogin: React.FC<LoginProps> = ({ onAuthSuccess }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [accountType, setAccountType] = useState<string>("DEMO");
   const [loading, setLoading] = useState<boolean>(false);
-  const handleLogin = () => {
-    setLoading(false);
+
+  const handleLogin = async (): Promise<void> => {
+    try {
+      setLoading(true);
+      const response = await axios.post<LoginResponse>("acttrader/login", {
+        username,
+        password,
+        accountType,
+      });
+      console.log("Response 😀", response);
+      const AtaccessToken = response.data.data.AtaccessToken;
+      console.log("--------------->actTradertoken", AtaccessToken);
+      localStorage.setItem("AtaccessToken", AtaccessToken);
+      localStorage.setItem("Atuser", JSON.stringify(response.data.data.user));
+      localStorage.setItem("username", username);
+      localStorage.setItem("password",password);
+      localStorage.setItem("AtaccountType", accountType);
+      console.log("😙", JSON.stringify(response.data.data.user));
+      if (AtaccessToken.length > 0) {
+        onAuthSuccess();
+        console.log("😀");
+      }
+    } catch (error) {
+      toast.warn("Login info is wrong");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div>
       <div className="bg-[#070707] p-6 rounded shadow-md w-96 border border-[#333333] border-dashed">
@@ -19,8 +62,9 @@ export default function ActTraderLogin() {
             <img src="/acttrader_logo.svg" alt="" className="w-[40px] h-auto" />
             <h1 className="text-2xl text-blue-400">ActTrader</h1>
           </div>
+          {/* Username Field */}
           <div className="mb-4 w-[80%] space-y-2">
-            <label className="block text-gray-700 text-sm" htmlFor="email">
+            <label className="block text-gray-700 text-sm" htmlFor="username">
               Username
             </label>
             <input
@@ -29,13 +73,13 @@ export default function ActTraderLogin() {
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className=" bg-[#070707] text-white rounded-lg px-3 py-2
-                             w-full order border-dashed border-gray-700 focus:border-blue-500 focus:ring-0 text-sm"
+              className="bg-[#070707] text-white rounded-lg px-3 py-2 w-full border border-gray-700 focus:border-blue-500 focus:outline-none text-sm"
               required
             />
           </div>
+          {/* Password Field */}
           <div className="mb-4 w-[80%] space-y-2">
-            <label className="text-sm block text-gray-700" htmlFor="password">
+            <label className="block text-gray-700 text-sm" htmlFor="password">
               Password
             </label>
             <input
@@ -44,31 +88,41 @@ export default function ActTraderLogin() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className=" bg-[#070707] text-white rounded-lg px-3 py-2
-                             w-full order border-dashed border-gray-700 focus:border-blue-500 focus:ring-0 text-sm"
+              className="bg-[#070707] text-white rounded-lg px-3 py-2 w-full border border-gray-700 focus:border-blue-500 focus:outline-none text-sm"
               required
             />
           </div>
-          <div className="mb-4 w-[80%] space-y-2">
-            <div className="w-full flex justify-between items-center ">
+          {/* Server Selection */}
+          <div className="mb-4 w-[80%]">
+            <div className="w-full flex justify-between items-center">
               <label className="text-sm block text-gray-700">
                 <span>Server Name</span>
               </label>
               <div className="flex justify-center items-center gap-2">
+                {/* DEMO Button */}
                 <span
-                  className="select-none rounded-full bg-yellow-500 text-white px-2 text-[12px] cursor-pointer flex justify-center items-center gap-1"
+                  className={`select-none rounded-full px-2 text-[12px] cursor-pointer flex justify-center items-center gap-1 ${
+                    accountType === "DEMO"
+                      ? "bg-yellow-500 text-white"
+                      : "bg-gray-300 text-gray-700"
+                  }`}
                   onClick={() => setAccountType("DEMO")}
                 >
-                  {accountType == "DEMO" && (
+                  {accountType === "DEMO" && (
                     <FaCheckCircle className="w-3 h-3" />
                   )}
                   DEMO
                 </span>
+                {/* LIVE Button */}
                 <span
-                  className="select-none rounded-full bg-green-500 text-white px-2 text-[12px] cursor-pointer flex justify-center items-center gap-1"
+                  className={`select-none rounded-full px-2 text-[12px] cursor-pointer flex justify-center items-center gap-1 ${
+                    accountType === "LIVE"
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-300 text-gray-700"
+                  }`}
                   onClick={() => setAccountType("LIVE")}
                 >
-                  {accountType == "LIVE" && (
+                  {accountType === "LIVE" && (
                     <FaCheckCircle className="w-3 h-3" />
                   )}
                   LIVE
@@ -76,10 +130,12 @@ export default function ActTraderLogin() {
               </div>
             </div>
           </div>
+          {/* Login Button */}
           <div className="mb-4 w-[80%]">
             <button
-              className=" w-full bg-blue-500 outline-1 outline-dashed rounded-lg outline-blue-500 outline-offset-2 p-1 flex justify-center items-center gap-2"
+              className="w-full bg-blue-500 rounded-lg p-2 flex justify-center items-center gap-2 outline-1 outline-dashed outline-blue-500 outline-offset-2"
               onClick={handleLogin}
+              disabled={loading}
             >
               {loading && <Loader className="h-5 w-5 mr-2 animate-spin" />}
               {!loading && <CiLogin className="w-5 h-5" />}
@@ -90,4 +146,6 @@ export default function ActTraderLogin() {
       </div>
     </div>
   );
-}
+};
+
+export default ActTraderLogin;

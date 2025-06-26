@@ -12,6 +12,7 @@ export interface AlertConfig {
   stopLoss: number;
   positionId_m: string;
   positionId_t: string;
+  positionId_a: string;
   tradeStartTime: string;
   messageData: string;
   view: boolean;

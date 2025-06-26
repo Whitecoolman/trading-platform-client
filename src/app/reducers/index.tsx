@@ -12,7 +12,8 @@ import tradelocker from "./tradelocker";
 import tradelockerInfo from "./tradelockerInfo";
 import trade from "./trade";
 import alert from "./alert";
-
+import acttrader from "./Acttrader";
+import acttraderInfo from "./acttraderinfo";
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -26,6 +27,8 @@ const reducers = combineReducers({
   tradelockerInfo,
   trade,
   alert,
+  acttrader,
+  acttraderInfo
 });
 
 export default reducers;

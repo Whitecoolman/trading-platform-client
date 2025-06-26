@@ -59,6 +59,7 @@ export interface UserParams {
   server: string;
 }
 
+
 export interface TradeLockerAccountListProps {
   onLogout: () => void;
 }
